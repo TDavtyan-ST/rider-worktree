@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <!-- Git Worktree icon: branching tree structure -->
+  <g fill="none" stroke="#6B57FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Main trunk -->
+    <line x1="12" y1="8" x2="12" y2="32"/>
+    <!-- Branch 1 -->
+    <path d="M12 14 Q18 14 22 10"/>
+    <!-- Branch 2 -->
+    <path d="M12 22 Q18 22 24 18"/>
+    <!-- Branch 3 -->
+    <path d="M12 28 Q18 28 26 26"/>
+  </g>
+  <!-- Nodes -->
+  <circle cx="12" cy="8" r="2.5" fill="#6B57FF"/>
+  <circle cx="12" cy="32" r="2.5" fill="#6B57FF"/>
+  <circle cx="22" cy="10" r="2.5" fill="#3DDC84"/>
+  <circle cx="24" cy="18" r="2.5" fill="#FF6B6B"/>
+  <circle cx="26" cy="26" r="2.5" fill="#FFB84D"/>
+  <!-- Worktree folders -->
+  <rect x="26" y="7" width="8" height="6" rx="1" fill="#3DDC84" opacity="0.3"/>
+  <rect x="28" y="15" width="8" height="6" rx="1" fill="#FF6B6B" opacity="0.3"/>
+  <rect x="30" y="23" width="8" height="6" rx="1" fill="#FFB84D" opacity="0.3"/>
+</svg>
