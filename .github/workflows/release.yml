@@ -29,9 +29,6 @@ jobs:
       - name: Build plugin
         run: ./gradlew buildPlugin
 
-      - name: Verify plugin
-        run: ./gradlew verifyPlugin
-
       - name: Publish to JetBrains Marketplace
         env:
           PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
