@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>com.github.tdavtyan.riderworktrees</id>
-    <name>Rider Worktrees</name>
+    <name>Git Worktrees</name>
     <vendor>tdavtyan</vendor>
 
     <description><![CDATA[
