@@ -24,6 +24,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <h3>0.1.1</h3>
+        <ul>
+            <li>Fixed toolbar icons for Lock, Unlock, and Prune actions</li>
+            <li>Distinct tree icons: home folder for main worktree, patch icon for worktrees with changes</li>
+            <li>Fixed diff viewer running on UI thread (SlowOperations error)</li>
+        </ul>
         <h3>0.1.0</h3>
         <ul>
             <li>Initial release</li>
@@ -94,17 +100,20 @@
         <action id="RiderWorktrees.Lock"
                 class="com.github.tdavtyan.riderworktrees.actions.LockWorktreeAction"
                 text="Lock Worktree"
-                description="Lock the selected worktree to prevent pruning"/>
+                description="Lock the selected worktree to prevent pruning"
+                icon="AllIcons.Diff.Lock"/>
 
         <action id="RiderWorktrees.Unlock"
                 class="com.github.tdavtyan.riderworktrees.actions.UnlockWorktreeAction"
                 text="Unlock Worktree"
-                description="Unlock the selected worktree"/>
+                description="Unlock the selected worktree"
+                icon="AllIcons.Actions.Cancel"/>
 
         <action id="RiderWorktrees.Prune"
                 class="com.github.tdavtyan.riderworktrees.actions.PruneWorktreesAction"
                 text="Prune Stale Worktrees"
-                description="Remove stale worktree entries"/>
+                description="Remove stale worktree entries"
+                icon="AllIcons.Actions.ClearCash"/>
 
         <group id="RiderWorktrees.ToolWindowToolbar">
             <reference ref="RiderWorktrees.Create"/>

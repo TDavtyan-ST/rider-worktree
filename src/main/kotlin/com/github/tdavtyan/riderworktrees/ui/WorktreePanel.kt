@@ -281,10 +281,13 @@ private class WorktreeTreeCellRenderer : ColoredTreeCellRenderer() {
     }
 
     private fun renderWorktree(wt: WorktreeInfo, node: DefaultMutableTreeNode) {
+        val hasChanges = node.childCount > 0
         icon = when {
             wt.isCurrent -> AllIcons.Actions.Checked
             wt.isLocked -> AllIcons.Nodes.Locked
             wt.branch == null -> AllIcons.Vcs.CommitNode
+            wt.isMain -> AllIcons.Nodes.HomeFolder
+            hasChanges -> AllIcons.Vcs.Patch
             else -> AllIcons.Vcs.BranchNode
         }
 
