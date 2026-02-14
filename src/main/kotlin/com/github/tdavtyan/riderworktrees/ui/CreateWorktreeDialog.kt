@@ -90,10 +90,10 @@ class CreateWorktreeDialog(private val project: Project) : DialogWrapper(project
         newBranchField.isEnabled = false
 
         pathField.addBrowseFolderListener(
-            "Select Worktree Location",
-            "Choose the directory for the new worktree",
             project,
             FileChooserDescriptorFactory.createSingleFolderDescriptor()
+                .withTitle("Select Worktree Location")
+                .withDescription("Choose the directory for the new worktree")
         )
     }
 

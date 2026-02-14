@@ -11,7 +11,6 @@ import com.intellij.openapi.Disposable
 import com.intellij.openapi.actionSystem.ActionGroup
 import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.actionSystem.ActionPlaces
-import com.intellij.openapi.actionSystem.DataProvider
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.fileTypes.FileTypeManager
 import com.intellij.openapi.project.Project
@@ -28,7 +27,7 @@ import javax.swing.JTree
 import javax.swing.tree.DefaultMutableTreeNode
 import javax.swing.tree.DefaultTreeModel
 
-class WorktreePanel(private val project: Project) : SimpleToolWindowPanel(true, true), DataProvider, Disposable {
+class WorktreePanel(private val project: Project) : SimpleToolWindowPanel(true, true), Disposable {
 
     private val rootNode = DefaultMutableTreeNode("Worktrees")
     private val treeModel = DefaultTreeModel(rootNode)
@@ -247,18 +246,8 @@ class WorktreePanel(private val project: Project) : SimpleToolWindowPanel(true, 
         }?.distinct() ?: emptyList()
     }
 
-    @Suppress("DEPRECATION")
-    override fun getData(dataId: String): Any? {
-        if (WORKTREE_PANEL_KEY == dataId) return this
-        return null
-    }
-
     override fun dispose() {
         // Cleanup if needed
-    }
-
-    companion object {
-        const val WORKTREE_PANEL_KEY = "WorktreePanel"
     }
 }
 
