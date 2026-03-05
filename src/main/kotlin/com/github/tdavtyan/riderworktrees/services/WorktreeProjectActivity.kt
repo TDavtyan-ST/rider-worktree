@@ -15,12 +15,12 @@ class WorktreeProjectActivity : ProjectActivity {
     override suspend fun execute(project: Project) {
         LOG.info("WorktreeProjectActivity.execute() called for project: ${project.name}, basePath: ${project.basePath}")
 
-        // Subscribe to git repo changes for live refresh
+        // Subscribe to git repo changes — only refresh data, never steal focus
         project.messageBus.connect().subscribe(
             GitRepository.GIT_REPO_CHANGE,
             GitRepositoryChangeListener { repo ->
                 LOG.info("Git repo changed: ${repo.root.path}, refreshing worktree panel")
-                refreshAndAutoShow(project)
+                refreshPanel(project)
             }
         )
 
@@ -38,6 +38,36 @@ class WorktreeProjectActivity : ProjectActivity {
         refreshAndAutoShow(project)
     }
 
+    private fun refreshPanel(project: Project) {
+        ApplicationManager.getApplication().executeOnPooledThread {
+            try {
+                val service = WorktreeService.getInstance(project)
+                service.invalidateCache()
+                val worktrees = service.listWorktrees()
+                LOG.info("Found ${worktrees.size} worktrees: ${worktrees.map { "${it.displayName} (current=${it.isCurrent})" }}")
+
+                ApplicationManager.getApplication().invokeLater {
+                    if (project.isDisposed) return@invokeLater
+
+                    val tw = ToolWindowManager.getInstance(project).getToolWindow("Git Worktrees")
+                    if (tw == null) {
+                        LOG.warn("Tool window 'Git Worktrees' NOT found!")
+                        return@invokeLater
+                    }
+
+                    tw.contentManager.contents.forEach { content ->
+                        val panel = content.component
+                        if (panel is com.github.tdavtyan.riderworktrees.ui.WorktreePanel) {
+                            panel.refresh()
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                LOG.error("Error refreshing worktrees", e)
+            }
+        }
+    }
+
     private fun refreshAndAutoShow(project: Project) {
         ApplicationManager.getApplication().executeOnPooledThread {
             try {
@@ -49,14 +79,12 @@ class WorktreeProjectActivity : ProjectActivity {
                 ApplicationManager.getApplication().invokeLater {
                     if (project.isDisposed) return@invokeLater
 
-                    // Refresh the panel if it exists
                     val tw = ToolWindowManager.getInstance(project).getToolWindow("Git Worktrees")
                     if (tw == null) {
                         LOG.warn("Tool window 'Git Worktrees' NOT found!")
                         return@invokeLater
                     }
 
-                    // Find and refresh the WorktreePanel
                     tw.contentManager.contents.forEach { content ->
                         val panel = content.component
                         if (panel is com.github.tdavtyan.riderworktrees.ui.WorktreePanel) {
@@ -64,7 +92,6 @@ class WorktreeProjectActivity : ProjectActivity {
                         }
                     }
 
-                    // Auto-show if there are multiple worktrees
                     if (worktrees.size > 1 && !tw.isVisible) {
                         LOG.info("Auto-showing tool window (${worktrees.size} worktrees)")
                         tw.show()

@@ -62,7 +62,7 @@
                     anchor="bottom"
                     secondary="false"
                     icon="AllIcons.Actions.SplitVertically"
-                    doNotActivateOnStart="false"
+                    doNotActivateOnStart="true"
                     factoryClass="com.github.tdavtyan.riderworktrees.ui.WorktreeToolWindowFactory"/>
 
         <postStartupActivity
